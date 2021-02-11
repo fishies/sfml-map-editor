@@ -54,6 +54,24 @@ int main()
     midgroundToggle->connect("Changed", [&](){tilemap.toggleMidgroundPlane();});
     gui.add(midgroundToggle);
 
+    tgui::EditBox::Ptr mapFileName = tgui::EditBox::create();
+    mapFileName->setPosition(810,485);
+    mapFileName->setSize(224,16);
+    mapFileName->setDefaultText("Enter Map File Name Here...");
+    gui.add(mapFileName);
+
+    tgui::Button::Ptr saveButton = tgui::Button::create();
+    saveButton->setPosition(810,501);
+    saveButton->setSize(112,16);
+    saveButton->setText("[INS] Save File");
+    gui.add(saveButton);
+
+    tgui::Button::Ptr loadButton = tgui::Button::create();
+    loadButton->setPosition(922,501);
+    loadButton->setSize(112,16);
+    loadButton->setText("[DEL] Open File");
+    gui.add(loadButton);
+
     for(;mainWindow.isOpen();)
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(mainWindow);
