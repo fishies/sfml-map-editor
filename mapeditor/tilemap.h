@@ -45,6 +45,7 @@ public:
 
     uint16_t getTile(const sf::Vector2u &pos, MapLayer layer);
     void setTile(const sf::Vector2u &pos, MapLayer layer, uint16_t tileNum);
+    int fillAtTile(const sf::Vector2u &pos, MapLayer layer, uint16_t tileNum); // returns number of tiles filled
     void toggleMidgroundPlane();
 
     sf::FloatRect getBoundingBox() const;

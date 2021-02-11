@@ -202,6 +202,12 @@ void TileMap::setTile(const sf::Vector2u &pos, MapLayer layer, uint16_t tileNum)
     tiles[layer][pos.y*size.x + pos.x] = tileNum;
 }
 
+int TileMap::fillAtTile(const sf::Vector2u &pos, MapLayer layer, uint16_t tileNum)
+{
+    //recursion seems to be most straightforward way to implement this... if it doesn't blow up the call stack
+    return -1;
+}
+
 void TileMap::toggleMidgroundPlane()
 {
     showMidgroundPlane = !showMidgroundPlane;
