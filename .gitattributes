@@ -1,0 +1,8 @@
+* text eol=lf
+
+*.cpp text
+*.h text
+*.hpp text
+
+*.png binary
+*.map binary
