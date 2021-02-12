@@ -160,15 +160,33 @@ int main()
         {
             if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
-                tilemap.setTile(sf::Vector2u((mousePos.x-5)/32,(mousePos.y-5)/32),
-                                static_cast<MapLayer>(std::stoi(layerSelect->getSelectedItemId().toAnsiString())),
-                                palette.getSelected());
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl))
+                {
+                    tilemap.fillAtTile(sf::Vector2u((mousePos.x-5)/32,(mousePos.y-5)/32),
+                                       static_cast<MapLayer>(std::stoi(layerSelect->getSelectedItemId().toAnsiString())),
+                                       palette.getSelected());
+                }
+                else
+                {
+                    tilemap.setTile(sf::Vector2u((mousePos.x-5)/32,(mousePos.y-5)/32),
+                                    static_cast<MapLayer>(std::stoi(layerSelect->getSelectedItemId().toAnsiString())),
+                                    palette.getSelected());
+                }
             }
             else if(sf::Mouse::isButtonPressed(sf::Mouse::Right))
             {
-                tilemap.setTile(sf::Vector2u((mousePos.x-5)/32,(mousePos.y-5)/32),
-                                static_cast<MapLayer>(std::stoi(layerSelect->getSelectedItemId().toAnsiString())),
-                                0);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl))
+                {
+                    tilemap.fillAtTile(sf::Vector2u((mousePos.x-5)/32,(mousePos.y-5)/32),
+                                       static_cast<MapLayer>(std::stoi(layerSelect->getSelectedItemId().toAnsiString())),
+                                       0);
+                }
+                else
+                {
+                    tilemap.setTile(sf::Vector2u((mousePos.x-5)/32,(mousePos.y-5)/32),
+                                    static_cast<MapLayer>(std::stoi(layerSelect->getSelectedItemId().toAnsiString())),
+                                    0);
+                }
             }
         }
 

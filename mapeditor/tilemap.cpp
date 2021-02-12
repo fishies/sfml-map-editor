@@ -1,6 +1,8 @@
 #include "tilemap.h"
 
 #include <fstream>
+#include <unordered_set>
+#include <queue>
 
 TileMap::TileMap(const sf::Vector2u &mapSize, const sf::Texture &tileTexture, const sf::Vector2i &spritesz)
 {
@@ -204,8 +206,48 @@ void TileMap::setTile(const sf::Vector2u &pos, MapLayer layer, uint16_t tileNum)
 
 int TileMap::fillAtTile(const sf::Vector2u &pos, MapLayer layer, uint16_t tileNum)
 {
-    //recursion seems to be most straightforward way to implement this... if it doesn't blow up the call stack
-    return -1;
+    //iterative traversal starting from pos
+    uint16_t ogTile = getTile(pos,layer);
+    int count = 0;
+    std::vector<std::vector<unsigned int>> visited(size.x,std::vector<unsigned int>(size.y, 0)); // because sf::Vector2u don't got a std::hash
+    std::queue<sf::Vector2u> toVisit;
+
+    for(toVisit.push(pos);
+        !toVisit.empty();
+        )
+    {
+        auto p = toVisit.front();
+        toVisit.pop();
+
+        //visited.add(p);
+        if(ogTile == getTile(p,layer))
+        {
+            setTile(p,layer,tileNum);
+            ++count;
+
+            if(p.x+1 < size.x && !visited[p.x+1][p.y])
+            {
+                toVisit.push(p+sf::Vector2u(1,0));
+                visited[p.x+1][p.y] = 1;
+            }
+            if(p.x > 0 && !visited[p.x-1][p.y])
+            {
+                toVisit.push(p+sf::Vector2u(-1,0));
+                visited[p.x-1][p.y] = 1;
+            }
+            if(p.y+1 < size.y && !visited[p.x][p.y+1])
+            {
+                toVisit.push(p+sf::Vector2u(0,1));
+                visited[p.x][p.y+1] = 1;
+            }
+            if(p.y > 0 && !visited[p.x][p.y-1])
+            {
+                toVisit.push(p+sf::Vector2u(0,-1));
+                visited[p.x][p.y-1] = 1;
+            }
+        }
+    }
+    return count;
 }
 
 void TileMap::toggleMidgroundPlane()
